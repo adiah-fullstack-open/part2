@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AddForm from "./components/AddForm";
-import Entry from "./components/Entry";
+import Phonebook from "./components/Phonebook";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -28,20 +28,7 @@ const App = () => {
         addPerson={addPerson}
       />
 
-      <h2>Numbers</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>name</th>
-            <th>number</th>
-          </tr>
-        </thead>
-        <tbody>
-          {persons.map((person) => (
-            <Entry person={person} key={person.id} />
-          ))}
-        </tbody>
-      </table>
+      <Phonebook persons={persons} />
     </div>
   );
 };
