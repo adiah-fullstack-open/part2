@@ -1,15 +1,15 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import AddForm from "./components/AddForm";
 import Filter from "./components/Filter";
 import Phonebook from "./components/Phonebook";
+import personService from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
+    personService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -47,19 +47,10 @@ const App = () => {
       return;
     }
 
-    // setPersons([
-    //   ...persons,
-    //   { name: newName, id: persons.length + 1, number: newNumber },
-    // ]);
-
-    // setNewName("");
-    // setNewNumber("");
-
     const person = { name: newName, number: newNumber };
 
-    axios.post("http://localhost:3001/persons", person).then((response) => {
-      console.log(response);
-      setPersons([...persons, response.data]);
+    personService.create(person).then((returnedPerson) => {
+      setPersons(persons.concat(returnedPerson));
       setNewName("");
       setNewNumber("");
     });
