@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddForm from "./components/AddForm";
+import Filter from "./components/Filter";
 import Phonebook from "./components/Phonebook";
 
 const App = () => {
@@ -54,9 +55,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
-      <div>
-        filter: <input onChange={handleFilterChange} value={filter} />
-      </div>
+      <Filter handleFilterChange={handleFilterChange} filter={filter} />
 
       <br />
 
