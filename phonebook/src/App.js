@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AddForm from "./components/AddForm";
 import Entry from "./components/Entry";
 
 const App = () => {
@@ -8,7 +9,7 @@ const App = () => {
 
   const [newName, setNewName] = useState("");
 
-  const handleChange = (event) => {
+  const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
 
@@ -20,14 +21,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+
+      <AddForm
+        newName={newName}
+        handleNameChange={handleNameChange}
+        addPerson={addPerson}
+      />
 
       <h2>Numbers</h2>
       <table>
