@@ -47,10 +47,22 @@ const App = () => {
       return;
     }
 
-    setPersons([
-      ...persons,
-      { name: newName, id: persons.length + 1, number: newNumber },
-    ]);
+    // setPersons([
+    //   ...persons,
+    //   { name: newName, id: persons.length + 1, number: newNumber },
+    // ]);
+
+    // setNewName("");
+    // setNewNumber("");
+
+    const person = { name: newName, number: newNumber };
+
+    axios.post("http://localhost:3001/persons", person).then((response) => {
+      console.log(response);
+      setPersons([...persons, response.data]);
+      setNewName("");
+      setNewNumber("");
+    });
   };
 
   return (
