@@ -8,9 +8,14 @@ const App = () => {
   ]);
 
   const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
+  };
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value);
   };
 
   // const checkDuplicates = (name) => {
@@ -30,7 +35,10 @@ const App = () => {
       return;
     }
 
-    setPersons([...persons, { name: newName, id: persons.length + 1 }]);
+    setPersons([
+      ...persons,
+      { name: newName, id: persons.length + 1, number: newNumber },
+    ]);
   };
 
   return (
@@ -39,7 +47,9 @@ const App = () => {
 
       <AddForm
         newName={newName}
+        newNumber={newNumber}
         handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
         addPerson={addPerson}
       />
 
