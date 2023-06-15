@@ -13,13 +13,19 @@ const App = () => {
       const filteredList = countriesList.filter((country) =>
         country.name.official.toLowerCase().includes(search.toLowerCase())
       );
-      console.log(filteredList);
+      // console.log(filteredList);
       setCountries(filteredList);
     });
   }, [search]);
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
+  };
+
+  const getSingleCountry = (countryName) => {
+    countriesService
+      .getCountry(countryName)
+      .then((receivedCountry) => setCountries([receivedCountry]));
   };
 
   return (
@@ -35,7 +41,8 @@ const App = () => {
       ) : countries.length === 1 ? (
         <CountryData country={countries[0]} />
       ) : (
-        <Countries list={countries} />
+        // getSingleCountry(countries[0].name.common)
+        <Countries list={countries} getSingleCountry={getSingleCountry} />
       )}
     </div>
   );

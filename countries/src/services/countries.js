@@ -7,6 +7,11 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
-const countriesService = { getAll };
+const getCountry = (country) => {
+  const request = axios.get(`${baseUrl}/name/${country}`);
+  return request.then((response) => response.data);
+};
+
+const countriesService = { getAll, getCountry };
 
 export default countriesService;

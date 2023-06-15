@@ -5,7 +5,6 @@ const CountryData = ({ country }) => {
   for (const lang in country.languages) {
     languages.push({ code: lang, language: country.languages[lang] });
   }
-  console.log(languages);
 
   return (
     <div>
