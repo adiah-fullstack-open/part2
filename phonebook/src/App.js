@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddForm from "./components/AddForm";
 import Filter from "./components/Filter";
+import Notification from "./components/Notification";
 import Phonebook from "./components/Phonebook";
 import personService from "./services/persons";
 
@@ -17,6 +18,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
 
   const [filter, setFilter] = useState("");
+  const [message, setMessage] = useState(null);
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
@@ -54,6 +56,13 @@ const App = () => {
                 person.id === returnedPerson.id ? returnedPerson : person
               )
             );
+            setMessage({
+              text: `${person.name}'s number has been updated`,
+              type: "success",
+            });
+            setTimeout(() => {
+              setMessage(null);
+            }, 5000);
             setNewName("");
             setNewNumber("");
           });
@@ -67,6 +76,13 @@ const App = () => {
 
     personService.create(person).then((returnedPerson) => {
       setPersons(persons.concat(returnedPerson));
+      setMessage({
+        text: `${person.name} has been added`,
+        type: "success",
+      });
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
       setNewName("");
       setNewNumber("");
     });
@@ -80,6 +96,13 @@ const App = () => {
         .deletePerson(id)
         .then((data) => {
           setPersons(persons.filter((person) => person.id !== id));
+          setMessage({
+            text: `${person.name} has been deleted`,
+            type: "success",
+          });
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
         })
         .catch((error) => alert(`error`));
     }
@@ -88,6 +111,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={message} />
 
       <Filter handleFilterChange={handleFilterChange} filter={filter} />
 
