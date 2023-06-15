@@ -70,7 +70,14 @@ const App = () => {
             );
             setNewName("");
             setNewNumber("");
-          });
+          })
+          .catch((error) =>
+            showNotification(
+              `${person.name}'s information has already been removed from the server`,
+              "error"
+            )
+          );
+        setPersons(persons.filter((p) => p.id !== person.id));
         return;
       } else {
         return;
