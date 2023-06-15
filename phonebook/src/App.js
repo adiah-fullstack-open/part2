@@ -37,8 +37,27 @@ const App = () => {
     event.preventDefault();
 
     if (checkDuplicates(newName)) {
-      alert(`${newName} is already added to the phonebook`);
-      return;
+      // alert(`${newName} is already added to the phonebook`);
+      // return;
+      const person = persons.find((person) => person.name === newName);
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        personService
+          .updateNumber(person.id, { ...person, number: newNumber })
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id === returnedPerson.id ? returnedPerson : person
+              )
+            );
+            setNewName("");
+            setNewNumber("");
+          });
+        return;
+      }
     }
 
     const person = { name: newName, number: newNumber };
