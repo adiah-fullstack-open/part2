@@ -57,6 +57,8 @@ const App = () => {
             setNewNumber("");
           });
         return;
+      } else {
+        return;
       }
     }
 
