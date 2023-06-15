@@ -35,12 +35,20 @@ const App = () => {
   const checkDuplicates = (name) =>
     persons.filter((person) => person.name === name).length > 0;
 
+  const showNotification = (message, type) => {
+    setMessage({
+      text: message,
+      type: type,
+    });
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+  };
+
   const addPerson = (event) => {
     event.preventDefault();
 
     if (checkDuplicates(newName)) {
-      // alert(`${newName} is already added to the phonebook`);
-      // return;
       const person = persons.find((person) => person.name === newName);
       if (
         window.confirm(
@@ -48,7 +56,6 @@ const App = () => {
         )
       ) {
         personService
-          // .updateNumber(person.id, { ...person, number: newNumber })
           .updateNumber(person.id, { number: newNumber })
           .then((returnedPerson) => {
             setPersons(
@@ -56,13 +63,11 @@ const App = () => {
                 person.id === returnedPerson.id ? returnedPerson : person
               )
             );
-            setMessage({
-              text: `${person.name}'s number has been updated`,
-              type: "success",
-            });
-            setTimeout(() => {
-              setMessage(null);
-            }, 5000);
+
+            showNotification(
+              `${person.name}'s number has been updated`,
+              "success"
+            );
             setNewName("");
             setNewNumber("");
           });
@@ -76,13 +81,7 @@ const App = () => {
 
     personService.create(person).then((returnedPerson) => {
       setPersons(persons.concat(returnedPerson));
-      setMessage({
-        text: `${person.name} has been added`,
-        type: "success",
-      });
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
+      showNotification(`${person.name} has been added`, "success");
       setNewName("");
       setNewNumber("");
     });
@@ -96,13 +95,7 @@ const App = () => {
         .deletePerson(id)
         .then((data) => {
           setPersons(persons.filter((person) => person.id !== id));
-          setMessage({
-            text: `${person.name} has been deleted`,
-            type: "success",
-          });
-          setTimeout(() => {
-            setMessage(null);
-          }, 5000);
+          showNotification(`${person.name} has been deleted`, "success");
         })
         .catch((error) => alert(`error`));
     }
