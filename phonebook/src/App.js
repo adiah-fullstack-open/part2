@@ -30,12 +30,6 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
-  // const checkDuplicates = (name) => {
-  //   const duplicates = persons.filter((person) => person.name === name);
-
-  //   return duplicates.length > 0;
-  // };
-
   const checkDuplicates = (name) =>
     persons.filter((person) => person.name === name).length > 0;
 
@@ -56,6 +50,19 @@ const App = () => {
     });
   };
 
+  const deletePerson = (id) => {
+    const person = persons.find((n) => n.id === id);
+
+    if (window.confirm(`Delete ${person.name}`)) {
+      personService
+        .deletePerson(id)
+        .then((data) => {
+          setPersons(persons.filter((person) => person.id !== id));
+        })
+        .catch((error) => alert(`error`));
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -72,7 +79,11 @@ const App = () => {
         addPerson={addPerson}
       />
 
-      <Phonebook persons={persons} filter={filter} />
+      <Phonebook
+        persons={persons}
+        filter={filter}
+        deletePerson={deletePerson}
+      />
     </div>
   );
 };

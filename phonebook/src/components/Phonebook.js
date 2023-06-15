@@ -1,7 +1,7 @@
 import React from "react";
 import Entry from "./Entry";
 
-const Phonebook = ({ persons, filter }) => {
+const Phonebook = ({ persons, filter, deletePerson }) => {
   const personsToShow =
     filter === ""
       ? persons
@@ -21,7 +21,11 @@ const Phonebook = ({ persons, filter }) => {
         </thead>
         <tbody>
           {personsToShow.map((person) => (
-            <Entry person={person} key={person.id} />
+            <Entry
+              person={person}
+              key={person.id}
+              deletePerson={() => deletePerson(person.id)}
+            />
           ))}
         </tbody>
       </table>
