@@ -9,11 +9,9 @@ const App = () => {
 
   useEffect(() => {
     countriesService.getAll().then((countriesList) => {
-      // setCountries(countriesList);
       const filteredList = countriesList.filter((country) =>
         country.name.official.toLowerCase().includes(search.toLowerCase())
       );
-      // console.log(filteredList);
       setCountries(filteredList);
     });
   }, [search]);
@@ -31,17 +29,12 @@ const App = () => {
   return (
     <div>
       find countries <input onChange={handleSearchChange} value={search} />
-      {/* {countries.length <= 10 ? (
-        <Countries list={countries} />
-      ) : (
-        "Too many matches, specify another filter"
-      )} */}
       {countries.length > 10 ? (
         "Too many matches, specify another filter"
       ) : countries.length === 1 ? (
+        // getSingleCountry(countries[0].name.common)
         <CountryData country={countries[0]} />
       ) : (
-        // getSingleCountry(countries[0].name.common)
         <Countries list={countries} getSingleCountry={getSingleCountry} />
       )}
     </div>
