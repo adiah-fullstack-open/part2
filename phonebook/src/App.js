@@ -86,12 +86,18 @@ const App = () => {
 
     const person = { name: newName, number: newNumber };
 
-    personService.create(person).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      showNotification(`${person.name} has been added`, "success");
-      setNewName("");
-      setNewNumber("");
-    });
+    personService
+      .create(person)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        showNotification(`${person.name} has been added`, "success");
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch((error) => {
+        // console.log(error.response.data.error);
+        showNotification(`${error.response.data.error}`, "error");
+      });
   };
 
   const deletePerson = (id) => {
