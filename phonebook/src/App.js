@@ -72,10 +72,7 @@ const App = () => {
             setNewNumber("");
           })
           .catch((error) =>
-            showNotification(
-              `${person.name}'s information has already been removed from the server`,
-              "error"
-            )
+            showNotification(`${error.response.data.error}`, "error")
           );
         setPersons(persons.filter((p) => p.id !== person.id));
         return;
